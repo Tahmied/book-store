@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details - Bookstore</title>
+    <style>
+        .scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 20px;
+        }
+
+        .book-row.small {
+            display: inline-flex;
+            gap: 20px;
+            margin-right: 20px;
+            white-space: normal;
+        }
+
+        /* Hide scrollbar */
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="singlebook.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search books, authors, genres...">
+                </div>
+            </div>
+            <div class="profile">
+                <div class="notification-badge">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="profile-icon">
+                    <img src="https://i.pravatar.cc/40" alt="Profile">
+                </div>
+            </div>
+        </header>
+
+        <section class="book-detail-section">
+            <div class="book-detail-container">
+                <div class="book-main-info">
+                    <div class="book-cover-large">
+                        <img src="https://m.media-amazon.com/images/I/81QuEGw8VPL._AC_UF1000,1000_QL80_.jpg"
+                            alt="Adventures of Huckleberry Finn">
+                    </div>
+                    <div class="book-meta">
+                        <h1>Adventures of Huckleberry Finn</h1>
+                        <p class="author">By Mark Twain</p>
+                        <div class="rating-container">
+                            <div class="stars">
+                                <span class="star filled"></span>
+                                <span class="star filled"></span>
+                                <span class="star filled"></span>
+                                <span class="star filled"></span>
+                                <span class="star"></span>
+                            </div>
+                            <span class="rating-text">4.2/5.0 (1,234 ratings)</span>
+                        </div>
+                        <div class="book-details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Genre:</span>
+                                <span class="detail-value" data-field="category">Classic Literature</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Pages:</span>
+                                <span class="detail-value" data-field="pages">366</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Published:</span>
+                                <span class="detail-value" data-field="publication_date">1884</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Author:</span>
+                                <span class="detail-value" data-field="author">Tahmied</span>
+                            </div>
+                        </div>
+                        <button class="add-to-collection" id="downloadButton">
+                            <i class="fas fa-plus"></i> Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="book-description">
+                    <h3>About the Book</h3>
+                    <p>A masterpiece of American literature that follows the journey of Huckleberry Finn
+                        and Jim, a runaway slave, as they travel down the Mississippi River. This timeless
+                        adventure explores themes of friendship, freedom, and social conventions...</p>
+                </div>
+
+                <div class="related-books">
+                    <div class="section-header">
+                        <h3>Readers Also Enjoyed</h3>
+                        <a href="#" class="see-all">See All</a>
+                    </div>
+                    <div class="scroll-container">
+                        <!-- Book rows will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Add this script at the end of the body in single-book.html -->
+    <script>
+        async function loadBookDetails() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const bookId = urlParams.get('id');
+
+                if (!bookId) {
+                    throw new Error('Missing book ID in URL');
+                }
+
+                // Load main book details
+                const response = await fetch(`/book/${bookId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const book = await response.json();
+
+                // Update book metadata
+                document.querySelector('.book-cover-large img').src = book.cover_url || 'placeholder.jpg';
+                document.querySelector('h1').textContent = book.title;
+                document.querySelector('.author').textContent = `By ${book.author}`;
+                document.querySelector('.book-description p').textContent = book.description;
+
+                // Update detailed information
+                // Update detailed information
+                document.querySelector('[data-field="category"]').textContent = book.category;
+                document.querySelector('[data-field="pages"]').textContent = book.pages;
+                document.querySelector('[data-field="publication_date"]').textContent =
+                    new Date(book.publication_date).getFullYear() || 'Unknown';
+                document.querySelector('[data-field="author"]').textContent = book.author;
+
+                // Setup download button
+                const downloadBtn = document.getElementById('downloadButton');
+                if (book.pdf_url) {
+                    downloadBtn.onclick = () => {
+                        window.open(book.pdf_url, '_blank');
+                    };
+                } else {
+                    downloadBtn.disabled = true;
+                    downloadBtn.textContent = 'PDF unavailable';
+                }
+
+                // Load related books
+                const relatedResponse = await fetch(`/books/category/${encodeURIComponent(book.category)}`);
+                if (!relatedResponse.ok) {
+                    throw new Error('Failed to load related books');
+                }
+                const relatedBooks = await relatedResponse.json();
+                populateRelatedBooks(relatedBooks.filter(b => b.id !== book.id));
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load book details. Please try again later.');
+                // Optionally redirect to homepage
+                // window.location.href = '/';
+            }
+        }
+
+        function populateRelatedBooks(books) {
+            console.log("Books to populate:", books); // Debug log
+            const container = document.querySelector('.scroll-container');
+            container.innerHTML = ''; // Clear existing content
+
+            if (!books || books.length === 0) {
+                console.log("No related books found"); // Debug log
+                container.innerHTML = '<p>No related books found</p>';
+                return;
+            }
+
+            // Split books into chunks of 3 for rows
+            const chunkSize = 3;
+            for (let i = 0; i < books.length; i += chunkSize) {
+                const bookChunk = books.slice(i, i + chunkSize);
+                console.log("Creating row with books:", bookChunk); // Debug log
+
+                // Create new row container
+                const row = document.createElement('div');
+                row.className = 'book-row small';
+
+                // Add book cards to the row
+                row.innerHTML = bookChunk.map(book => `
+            <div class="book-card small" onclick="window.location.href='/single-book.html?id=${book.id}'">
+                <div class="book-cover small">
+                    <img src="${book.cover_url || 'placeholder-image.jpg'}" alt="${book.title}">
+                </div>
+                <div class="book-info small">
+                    <h3>${book.title}</h3>
+                    <p>${book.author}</p>
+                    <div class="rating small">
+                        <div class="stars small">
+                            ${'<span class="star filled"></span>'.repeat(3)}
+                            ${'<span class="star"></span>'.repeat(2)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+                // Append row to container
+                container.appendChild(row);
+            }
+        }
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', loadBookDetails);
+    </script>
+</body>
+
+</html>

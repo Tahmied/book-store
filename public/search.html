@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Bookstore</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search books, authors, genres..." value="Mark Twain">
+                </div>
+            </div>
+            <div class="profile">
+                <div class="notification-badge">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="profile-icon">
+                    <img src="https://i.pravatar.cc/40" alt="Profile">
+                </div>
+            </div>
+        </header>
+
+        <section class="search-results-section">
+            <div class="search-meta">
+                <h2>Search Results for "Mark Twain"</h2>
+                <p class="results-count">24 books found</p>
+            </div>
+
+            <div class="search-content">
+                <aside class="filters-sidebar">
+                    <div class="filter-group">
+                        <h4>Filter by</h4>
+                        <div class="filter-options">
+                            <div class="filter-item">
+                                <label>Category</label>
+                                <select class="filter-select">
+                                    <option>All Categories</option>
+                                    <option>Fiction</option>
+                                    <option>Biography</option>
+                                    <option>Classics</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label>Rating</label>
+                                <div class="rating-filter">
+                                    <div class="stars">
+                                        <span class="star filled"></span>
+                                        <span class="star filled"></span>
+                                        <span class="star filled"></span>
+                                        <span class="star filled"></span>
+                                        <span class="star"></span>
+                                        <span class="rating-text">& Up</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label>Publication Year</label>
+                                <div class="year-range">
+                                    <input type="number" placeholder="Min" min="1900" max="2023">
+                                    <span>-</span>
+                                    <input type="number" placeholder="Max" min="1900" max="2023">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="book-cover">
+                            <img src="https://m.media-amazon.com/images/I/81QuEGw8VPL._AC_UF1000,1000_QL80_.jpg"
+                                alt="Adventures of Huckleberry Finn">
+                        </div>
+                        <div class="book-info">
+                            <h3>Adventures of Huckleberry Finn</h3>
+                            <p class="author">Mark Twain</p>
+                            <div class="result-meta">
+                                <div class="rating">
+                                    <div class="stars">
+                                        <span class="star filled"></span>
+                                        <span class="star filled"></span>
+                                        <span class="star filled"></span>
+                                        <span class="star filled"></span>
+                                        <span class="star"></span>
+                                    </div>
+                                    <span class="rating-count">(1,234 ratings)</span>
+                                </div>
+                                <div class="book-details">
+                                    <span class="genre">Classic Literature</span>
+                                    <span class="year">1884</span>
+                                    <span class="pages">366 pages</span>
+                                </div>
+                            </div>
+                            <p class="description">A masterpiece of American literature following Huckleberry Finn's
+                                journey down the Mississippi River, exploring themes of freedom and social conventions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Repeat result cards as needed -->
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="page-button active">1</button>
+                <button class="page-button">2</button>
+                <button class="page-button">3</button>
+                <button class="page-button next">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
