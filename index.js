@@ -217,9 +217,35 @@ app.get("/books/category/:category", (req, res) => {
         if (err) return res.status(500).json({ error: err });
         res.json(results);
     });
+});// Get author details (fixed)
+app.get('/api/authors/:id', async (req, res) => {
+    try {
+        const authorId = req.params.id;
+        const [results] = await db.promise().query('SELECT * FROM authors WHERE id = ?', [authorId]);
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Author not found' });
+        }
+        res.json(results[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
-
+// Get books by author (fixed)
+app.get('/api/books', async (req, res) => {
+    try {
+        const authorId = req.query.author_id;
+        const [books] = await db.promise().query(
+            'SELECT * FROM books WHERE author_id = ?',
+            [authorId]
+        );
+        res.json(books);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -128,7 +128,7 @@
 
 
         <section class="author-hero">
-            <h1>Featured Authors</h1>
+            <h1>Authors</h1>
             <p>Discover literary masters and emerging voices</p>
         </section>
 
@@ -153,13 +153,13 @@
         // Create an author card dynamically
         function createAuthorCard(author) {
             return `
-    <div class="author-card" onclick="window.location.href='author-profile.html?id=${author.id}'">
-        <div class="author-content">
+      <div class="author-card">
+        <div class="author-content" onclick="window.location.href='author-profile.html?author_id=${author.id}'">
             <div class="author-avatar">
                 <img src="${author.image_url || 'https://i.pravatar.cc/150'}" alt="${author.name}">
             </div>
             <h2>${author.name}</h2>
-            <p class="text-muted">${author.bio || 'Renowned author with multiple bestsellers'}</p>
+            <p class="text-muted">${author.bio || ''}</p>
             <div class="author-meta">
                 <div class="author-books">
                     ${author.books ? author.books.slice(0, 3).map(book => `
