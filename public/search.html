@@ -27,6 +27,34 @@
                 </div>
             </div>
         </header>
+        <!-- Mobile Header -->
+        <header class="header-mobile">
+            <div class="mobile-top-bar">
+                <a href="./" class="logo-link"><img src="your-logo.png" alt="Bookstore Logo" class="logo-mobile"></a>
+                <button class="hamburger-btn">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+
+            <nav class="mobile-nav">
+                <div class="mobile-nav-content">
+                    <div class="search-container-mobile">
+                        <div class="search-box-mobile">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search books, authors..." class="search-input-mobile">
+                        </div>
+                    </div>
+
+                    <div class="mobile-nav-links">
+                        <a href="./" class="mobile-nav-link">Home</a>
+                        <a href="./new-book.html" class="mobile-nav-link">Add New Book</a>
+                        <a href="./authors.html" class="mobile-nav-link">Authors</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
         <section class="search-results-section">
             <div class="search-meta">
@@ -245,6 +273,17 @@
                     window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
                 }
             }
+        });
+
+        // Add this JavaScript to handle the mobile menu
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const mobileNav = document.querySelector('.mobile-nav');
+
+            hamburgerBtn.addEventListener('click', function () {
+                this.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+            });
         });
     </script>
 </body>
