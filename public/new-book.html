@@ -66,8 +66,10 @@
                 <div class="mobile-nav-content">
                     <div class="search-container-mobile">
                         <div class="search-box-mobile">
-                            <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search books, authors..." class="search-input-mobile">
+                            <button class="search-button-mobile">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -79,6 +81,7 @@
                 </div>
             </nav>
         </header>
+
 
 
         <section class="add-book-section">
@@ -290,15 +293,43 @@
                 }
             }
         });
+
         // Add this JavaScript to handle the mobile menu
         document.addEventListener('DOMContentLoaded', function () {
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mobileNav = document.querySelector('.mobile-nav');
+            const searchInputMobile = document.querySelector('.search-input-mobile');
+            const searchButtonMobile = document.querySelector('.search-button-mobile');
 
+            // Toggle mobile menu
             hamburgerBtn.addEventListener('click', function () {
                 this.classList.toggle('active');
                 mobileNav.classList.toggle('active');
             });
+
+            // Handle search functionality when the search button is clicked
+            searchButtonMobile.addEventListener('click', function () {
+                const query = searchInputMobile.value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            });
+
+            // Handle search functionality when Enter key is pressed
+            searchInputMobile.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    const query = e.target.value.trim();
+                    if (query) {
+                        performSearch(query);
+                    }
+                }
+            });
+
+            // Perform search
+            function performSearch(query) {
+                // Redirect to the search results page with the query as a URL parameter
+                window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
+            }
         });
     </script>
 </body>
