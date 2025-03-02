@@ -452,6 +452,17 @@
             const results = await response.json();
             // You can implement search results display here
         });
+
+        //search 
+        // Add to existing JavaScript in each file
+        document.querySelector('.search-box input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = e.target.value.trim();
+                if (query) {
+                    window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
+                }
+            }
+        });
     </script>
 
 </body>

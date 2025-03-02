@@ -17,7 +17,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search books, authors, genres..." value="Mark Twain">
+                    <input type="text" placeholder="Search books, authors, genres..." value="">
                 </div>
             </div>
             <div class="profile">
@@ -120,6 +120,116 @@
             </div>
         </section>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query') || '';
+            const page = urlParams.get('page') || 1;
+
+            // Fetch and display results
+            await loadSearchResults(query, page);
+
+            // Initialize filters
+            await initializeFilters();
+        });
+
+        async function loadSearchResults(query, page) {
+            try {
+                const response = await fetch(`/search?query=${encodeURIComponent(query)}&page=${page}`);
+                const { results, total, totalPages } = await response.json();
+
+                // Update search meta
+                document.querySelector('h2').textContent = `Search Results for "${query}"`;
+                document.querySelector('.results-count').textContent = `${total} books found`;
+
+                // Populate results
+                const resultsGrid = document.querySelector('.results-grid');
+                resultsGrid.innerHTML = results.map(createResultCard).join('');
+
+                // Update pagination
+                updatePagination(totalPages, page);
+            } catch (error) {
+                console.error('Error loading results:', error);
+            }
+        }
+
+        function createResultCard(book) {
+            return `
+    <div class="result-card" onclick="window.location.href='/single-book.html?id=${book.id}'">
+        <div class="book-cover">
+            <img src="${book.cover_url || 'placeholder.jpg'}" alt="${book.title}">
+        </div>
+        <div class="book-info">
+            <h3>${book.title}</h3>
+            <p class="author">${book.author}</p>
+            <div class="result-meta">
+                <div class="rating">
+                    <div class="stars">
+                        ${'<span class="star filled"></span>'.repeat(Math.floor(book.rating || 0))}
+                        ${'<span class="star"></span>'.repeat(5 - Math.floor(book.rating || 0))}
+                    </div>
+                </div>
+                <div class="book-details">
+                    <span class="genre">${book.category}</span>
+                    <span class="year">${new Date(book.publication_date).getFullYear()}</span>
+                    <span class="pages">${book.pages} pages</span>
+                </div>
+            </div>
+            <p class="description">${book.description || ''}</p>
+        </div>
+    </div>`;
+        }
+
+        async function initializeFilters() {
+            // Populate categories
+            const categorySelect = document.querySelector('.filter-select');
+            const categories = await fetch('/categories').then(r => r.json());
+            categorySelect.innerHTML = `
+        <option>All Categories</option>
+        ${categories.map(c => `<option>${c}</option>`).join('')}
+    `;
+
+            // Add filter event listeners
+            document.querySelectorAll('.filter-select, .year-range input').forEach(element => {
+                element.addEventListener('change', applyFilters);
+            });
+        }
+
+        function applyFilters() {
+            const url = new URL(window.location);
+            url.searchParams.set('category', document.querySelector('.filter-select').value);
+            url.searchParams.set('minYear', document.querySelector('.year-range input[placeholder="Min"]').value);
+            url.searchParams.set('maxYear', document.querySelector('.year-range input[placeholder="Max"]').value);
+            window.location = url.toString();
+        }
+
+        function updatePagination(totalPages, currentPage) {
+            const pagination = document.querySelector('.pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `
+            <button class="page-button ${i == currentPage ? 'active' : ''}" 
+                    onclick="navigateToPage(${i})">${i}</button>
+        `;
+            }
+
+            if (currentPage < totalPages) {
+                pagination.innerHTML += `
+            <button class="page-button next" 
+                    onclick="navigateToPage(${parseInt(currentPage) + 1})">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>`;
+            }
+        }
+
+        function navigateToPage(page) {
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            window.location = url.toString();
+        }
+    </script>
 </body>
 
 </html>

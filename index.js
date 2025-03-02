@@ -142,16 +142,62 @@ app.get("/book/:id", (req, res) => {
 
 // Search books
 app.get("/search", (req, res) => {
-    const { query } = req.query;
-    const sql = `
+    const { query, category, minRating, maxYear, page = 1, limit = 10 } = req.query;
+    const offset = (page - 1) * limit;
+
+    let sql = `
         SELECT books.*, authors.name AS author, authors.image_url AS author_image_url 
         FROM books 
         LEFT JOIN authors ON books.author_id = authors.id 
-        WHERE books.title LIKE ? OR authors.name LIKE ?
+        WHERE 1=1
     `;
-    db.query(sql, [`%${query}%`, `%${query}%`], (err, results) => {
+    const params = [];
+
+    if (query) {
+        sql += ` AND (books.title LIKE ? OR authors.name LIKE ?)`;
+        params.push(`%${query}%`, `%${query}%`);
+    }
+    if (category) {
+        sql += ` AND books.category = ?`;
+        params.push(category);
+    }
+    if (minRating) {
+        sql += ` AND books.rating >= ?`;
+        params.push(minRating);
+    }
+    if (maxYear) {
+        sql += ` AND YEAR(books.publication_date) <= ?`;
+        params.push(maxYear);
+    }
+
+    // Add pagination
+    sql += ` LIMIT ? OFFSET ?`;
+    params.push(parseInt(limit), parseInt(offset));
+
+    db.query(sql, params, (err, results) => {
         if (err) return res.status(500).json({ error: err });
-        res.json(results);
+
+        // Get total count
+        const countSql = sql.replace(/LIMIT.*/, '');
+        db.query(countSql, params.slice(0, -2), (countErr, countResults) => {
+            if (countErr) return res.status(500).json({ error: countErr });
+
+            res.json({
+                results,
+                total: countResults.length,
+                page: parseInt(page),
+                totalPages: Math.ceil(countResults.length / limit)
+            });
+        });
+    });
+});
+
+// Get all categories for filter dropdown
+app.get("/categories", (req, res) => {
+    const sql = "SELECT DISTINCT category FROM books";
+    db.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: err });
+        res.json(results.map(r => r.category));
     });
 });
 
