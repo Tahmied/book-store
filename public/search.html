@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results - Bookstore</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="search.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,43 +37,7 @@
             </div>
 
             <div class="search-content">
-                <aside class="filters-sidebar">
-                    <div class="filter-group">
-                        <h4>Filter by</h4>
-                        <div class="filter-options">
-                            <div class="filter-item">
-                                <label>Category</label>
-                                <select class="filter-select">
-                                    <option>All Categories</option>
-                                    <option>Fiction</option>
-                                    <option>Biography</option>
-                                    <option>Classics</option>
-                                </select>
-                            </div>
-                            <div class="filter-item">
-                                <label>Rating</label>
-                                <div class="rating-filter">
-                                    <div class="stars">
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star"></span>
-                                        <span class="rating-text">& Up</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="filter-item">
-                                <label>Publication Year</label>
-                                <div class="year-range">
-                                    <input type="number" placeholder="Min" min="1900" max="2023">
-                                    <span>-</span>
-                                    <input type="number" placeholder="Max" min="1900" max="2023">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
+
 
                 <div class="results-grid">
                     <div class="result-card">
@@ -181,6 +144,9 @@
     </div>`;
         }
 
+        let filterTimeout;
+        const DEBOUNCE_TIME = 500; // 0.5 second delay
+
         async function initializeFilters() {
             // Populate categories
             const categorySelect = document.querySelector('.filter-select');
@@ -189,19 +155,61 @@
         <option>All Categories</option>
         ${categories.map(c => `<option>${c}</option>`).join('')}
     `;
+            // Initialize year inputs from URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            document.querySelector('.year-range input[placeholder="Min"]').value = urlParams.get('minYear') || '';
+            document.querySelector('.year-range input[placeholder="Max"]').value = urlParams.get('maxYear') || '';
 
-            // Add filter event listeners
-            document.querySelectorAll('.filter-select, .year-range input').forEach(element => {
-                element.addEventListener('change', applyFilters);
+            // Update event listeners for filters
+            document.querySelector('.filter-select').addEventListener('change', applyFilters);
+
+            // Use input event with debouncing for year fields
+            document.querySelectorAll('.year-range input').forEach(input => {
+                input.addEventListener('input', handleYearInput);
             });
+        }
+
+
+        function handleYearInput(e) {
+            // Clear any existing timeout
+            clearTimeout(filterTimeout);
+
+            // Validate input immediately
+            const value = parseInt(e.target.value);
+            if (value < 1900) e.target.value = 1900;
+            if (value > new Date().getFullYear()) e.target.value = new Date().getFullYear();
+
+            // Set new timeout to apply filters after user stops typing
+            filterTimeout = setTimeout(() => {
+                applyFilters();
+            }, DEBOUNCE_TIME);
         }
 
         function applyFilters() {
             const url = new URL(window.location);
-            url.searchParams.set('category', document.querySelector('.filter-select').value);
-            url.searchParams.set('minYear', document.querySelector('.year-range input[placeholder="Min"]').value);
-            url.searchParams.set('maxYear', document.querySelector('.year-range input[placeholder="Max"]').value);
-            window.location = url.toString();
+            const category = document.querySelector('.filter-select').value;
+            const minYear = document.querySelector('.year-range input[placeholder="Min"]').value;
+            const maxYear = document.querySelector('.year-range input[placeholder="Max"]').value;
+
+            // Reset page on filter change
+            url.searchParams.delete('page');
+
+            // Update category
+            category === 'All Categories'
+                ? url.searchParams.delete('category')
+                : url.searchParams.set('category', category);
+
+            // Update years
+            minYear ? url.searchParams.set('minYear', minYear) : url.searchParams.delete('minYear');
+            maxYear ? url.searchParams.set('maxYear', maxYear) : url.searchParams.delete('maxYear');
+
+            // Preserve existing query
+            if (!url.searchParams.get('query')) {
+                url.searchParams.set('query', new URLSearchParams(window.location.search).get('query') || '');
+            }
+
+            window.history.replaceState({}, '', url.toString());
+            loadSearchResults(url.searchParams.get('query'), 1);
         }
 
         function updatePagination(totalPages, currentPage) {
