@@ -34,19 +34,16 @@
 <body>
     <div class="container">
         <header class="header">
+            <img src="your-logo.png" alt="Bookstore Logo" class="logo">
+            <nav class="nav-menu">
+                <a href="./" class="nav-link">Home</a>
+                <a href="./new-book.html" class="nav-link">Add New Book</a>
+                <a href="./authors.html" class="nav-link">Authors</a>
+            </nav>
             <div class="search-container">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Search books, authors, genres...">
-                </div>
-            </div>
-            <div class="profile">
-                <div class="notification-badge">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
-                </div>
-                <div class="profile-icon">
-                    <img src="https://i.pravatar.cc/40" alt="Profile">
                 </div>
             </div>
         </header>
@@ -67,25 +64,7 @@
                         <div class="book-info">
                             <h3>Adventures of Huckleberry Finn</h3>
                             <p>By Mark Twain</p>
-                            <div class="rating-container">
-                                <div class="rating">
-                                    <div class="stars">
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                    </div>
-                                </div>
-                                <div class="readers">
-                                    <div class="reader-avatars">
-                                        <img src="https://i.pravatar.cc/24?img=4" alt="Reader">
-                                        <img src="https://i.pravatar.cc/24?img=5" alt="Reader">
-                                        <img src="https://i.pravatar.cc/24?img=6" alt="Reader">
-                                    </div>
-                                    <div class="more-readers">+42</div>
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>
@@ -280,7 +259,7 @@
                 </div>
             </section>
 
-            <section class="authors-section">
+            <!-- <section class="authors-section">
                 <h2>Authors</h2>
                 <div class="author-list">
                     <div class="author-item">
@@ -320,7 +299,7 @@
                         <div class="author-name">Benjamin den Boer</div>
                     </div>
                 </div>
-            </section>
+            </section> -->
         </div>
     </div>
 
@@ -349,21 +328,7 @@
         <div class="book-info">
             <h3>${book.title}</h3>
             <p>By ${book.author}</p>
-            <div class="rating-container">
-                <div class="rating">
-                    <div class="stars">
-                        ${'<span class="star filled"></span>'.repeat(5)}
-                    </div>
-                </div>
-                <div class="readers">
-                    <div class="reader-avatars">
-                        <img src="https://i.pravatar.cc/24?img=4" alt="Reader">
-                        <img src="https://i.pravatar.cc/24?img=5" alt="Reader">
-                        <img src="https://i.pravatar.cc/24?img=6" alt="Reader">
-                    </div>
-                    <div class="more-readers">+42</div>
-                </div>
-            </div>
+            
         </div>
     </div>
     `;
@@ -450,11 +415,9 @@
             const query = e.target.value;
             const response = await fetch(`/search?query=${encodeURIComponent(query)}`);
             const results = await response.json();
-            // You can implement search results display here
         });
 
         //search 
-        // Add to existing JavaScript in each file
         document.querySelector('.search-box input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const query = e.target.value.trim();

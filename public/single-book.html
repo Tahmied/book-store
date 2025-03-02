@@ -38,22 +38,20 @@
 <body>
     <div class="container">
         <header class="header">
+            <img src="your-logo.png" alt="Bookstore Logo" class="logo">
+            <nav class="nav-menu">
+                <a href="./" class="nav-link">Home</a>
+                <a href="./new-book.html" class="nav-link">Add New Book</a>
+                <a href="./authors.html" class="nav-link">Authors</a>
+            </nav>
             <div class="search-container">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Search books, authors, genres...">
                 </div>
             </div>
-            <div class="profile">
-                <div class="notification-badge">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
-                </div>
-                <div class="profile-icon">
-                    <img src="https://i.pravatar.cc/40" alt="Profile">
-                </div>
-            </div>
         </header>
+
 
         <section class="book-detail-section">
             <div class="book-detail-container">
@@ -225,6 +223,17 @@
 
         // Initialize when page loads
         window.addEventListener('DOMContentLoaded', loadBookDetails);
+
+
+        //search 
+        document.querySelector('.search-box input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = e.target.value.trim();
+                if (query) {
+                    window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
+                }
+            }
+        });
     </script>
 </body>
 
