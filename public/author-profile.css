@@ -1,0 +1,71 @@
+  .book-card {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+  }
+
+  .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .book-card.small {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+  }
+
+  .book-card.small:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Author Profile Page Styles */
+  .author-info {
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 16px;
+      margin-bottom: 2rem;
+  }
+
+  .author-header {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+  }
+
+  .author-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+  }
+
+  .author-details h1 {
+      margin: 0;
+      font-size: 2.5rem;
+  }
+
+  .back-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: transform 0.2s ease;
+  }
+
+  .back-button:hover {
+      transform: translateY(-2px);
+  }
+
+  .no-books,
+  .error {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+  }
+
+  .author-card {
+      cursor: pointer !important;
+  }

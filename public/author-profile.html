@@ -5,75 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookstore UI</title>
-    <style>
-        .book-card {
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .book-card.small {
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .book-card.small:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Author Profile Page Styles */
-        .author-info {
-            padding: 2rem;
-            background: var(--card-bg);
-            border-radius: 16px;
-            margin-bottom: 2rem;
-        }
-
-        .author-header {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .author-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .author-details h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-
-        .back-button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .no-books,
-        .error {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-        }
-    </style>
+    <link rel="stylesheet" href="author-profile.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -288,7 +220,7 @@
                 // Function to create a small book card
                 const createSmallBookCard = (book) => {
                     return `
-                    <div class="book-card small" onclick="window.location.href='book-details.html?book_id=${book.id}'">
+                    <div class="book-card small" onclick="window.location.href='/single-book.html?id=${book.id}'">
                         <div class="book-cover small">
                             <img src="${book.cover_url || 'https://via.placeholder.com/150x200'}" 
                                  alt="${book.title}">
