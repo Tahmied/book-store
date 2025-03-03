@@ -5,30 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Book - Bookstore</title>
-    <style>
-        /* File name display */
-        .file-name {
-            display: block;
-            margin-top: 8px;
-            font-size: 14px;
-            color: #4a5568;
-            font-weight: 500;
-        }
-
-        /* Upload area interactions */
-        .upload-area {
-            transition: border-color 0.3s ease;
-        }
-
-        .upload-area:hover {
-            border-color: #a0aec0;
-        }
-
-        .upload-area.dragover {
-            border-color: #48bb78;
-            background-color: #f0fff4;
-        }
-    </style>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="newbook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -201,7 +177,6 @@
             document.getElementById('newAuthorNameSection').style.display = isNewAuthor ? 'block' : 'none';
             document.getElementById('authorImageSection').style.display = isNewAuthor ? 'block' : 'none';
 
-            // Toggle required attributes
             document.getElementById('newAuthorName').toggleAttribute('required', isNewAuthor);
             document.querySelector('input[name="authorImage"]').toggleAttribute('required', isNewAuthor);
         }
@@ -212,7 +187,6 @@
 
             const formData = new FormData(e.target);
 
-            // If creating new author, replace 'new' with actual author name
             if (formData.get('author') === 'new') {
                 formData.set('author', formData.get('newAuthorName'));
             }
@@ -253,11 +227,9 @@
                     fileNameDisplay.textContent = file.name;
                     uploadArea.appendChild(fileNameDisplay);
 
-                    // Visual feedback for the upload area
                     uploadArea.style.borderColor = '#48bb78';
                     uploadArea.querySelector('i').style.color = '#48bb78';
                 } else {
-                    // Reset styling if no file
                     uploadArea.style.borderColor = '#cbd5e0';
                     uploadArea.querySelector('i').style.color = '#cbd5e0';
                 }
@@ -294,7 +266,7 @@
             }
         });
 
-        // Add this JavaScript to handle the mobile menu
+        // JS to handle the mobile menu
         document.addEventListener('DOMContentLoaded', function () {
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mobileNav = document.querySelector('.mobile-nav');
@@ -327,7 +299,6 @@
 
             // Perform search
             function performSearch(query) {
-                // Redirect to the search results page with the query as a URL parameter
                 window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
             }
         });

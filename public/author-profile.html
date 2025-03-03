@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookstore UI</title>
+    <title>Author Profile | Bookstore</title>
     <link rel="stylesheet" href="author-profile.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -61,138 +61,17 @@
         <div class="content-container">
             <section class="browse-section">
                 <div class="book-row small">
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327878801i/12158480.jpg"
-                                alt="Super Mario">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Super Mario</h3>
-                            <p>Jeff Ryan</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/71pL+3nMzfL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Blue is Darkness Weakened by Light">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Blue is Darkness Weakened by Light</h3>
-                            <p>Sarah Jones</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/91dSMhdIzTL._AC_UF1000,1000_QL80_.jpg"
-                                alt="A Million Miles in a Thousand Years">
-                        </div>
-                        <div class="book-info small">
-                            <h3>A Million Miles in a Thousand Years</h3>
-                            <p>Donald Miller</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="book-row small">
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/81V9X9RlJIL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Boy Erased">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Boy Erased</h3>
-                            <p>Garrard Conley</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1575468480i/49825952.jpg"
-                                alt="The Crow's Vow">
-                        </div>
-                        <div class="book-info small">
-                            <h3>The Crow's Vow</h3>
-                            <p>Susan Briscoe</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/81ibfYk4qmL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Harry Potter - The Prisoner of Azkaban">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Harry Potter - The Prisoner of Azkaban</h3>
-                            <p>J.K. Rowling</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- book will be added here dynamically from db using javascript -->
                 </div>
             </section>
         </div>
     </div>
     <script>
-        // author-profile.html script
+
         document.addEventListener('DOMContentLoaded', async () => {
             // Get author ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const authorId = urlParams.get('author_id');
-
             if (!authorId) {
                 window.location.href = './authors.html';
                 return;
@@ -230,7 +109,7 @@
                         <p class="author-bio">${author.bio || 'Explore works by this author'}</p>
                     </div>
                 </div>
-            `;
+                `;
                 contentContainer.insertBefore(authorInfoContainer, backButton.nextSibling);
 
                 // Fetch books by author
@@ -240,7 +119,7 @@
                 }
                 const books = await booksResponse.json();
 
-                // Clear existing demo content
+                // Clear existing demo content in html
                 booksContainer.innerHTML = '';
 
                 if (books.length === 0) {
@@ -248,7 +127,7 @@
                     return;
                 }
 
-                // Function to create a small book card
+                // Function to create a book card
                 const createSmallBookCard = (book) => {
                     return `
                     <div class="book-card small" onclick="window.location.href='/single-book.html?id=${book.id}'">
@@ -270,7 +149,7 @@
                             </div>
                         </div>
                     </div>
-                `;
+                    `;
                 };
 
                 // Split books into chunks of 3 for rows
@@ -295,9 +174,8 @@
             }
         });
 
-        // Add this JavaScript to handle the mobile menu
 
-        // Add this JavaScript to handle the mobile menu
+        // JavaScript to handle the mobile menu
         document.addEventListener('DOMContentLoaded', function () {
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mobileNav = document.querySelector('.mobile-nav');
@@ -330,7 +208,6 @@
 
             // Perform search
             function performSearch(query) {
-                // Redirect to the search results page with the query as a URL parameter
                 window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
             }
         });

@@ -4,28 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookstore UI</title>
-    <style>
-        .book-card {
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .book-card.small {
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .book-card.small:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <title>Bookstore</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -33,6 +12,7 @@
 
 <body>
     <div class="container">
+        <!-- pc header -->
         <header class="header">
             <a href="./" class="logo-link"><img src="your-logo.png" alt="Bookstore Logo" class="logo"></a>
             <nav class="nav-menu">
@@ -77,210 +57,35 @@
                 </div>
             </nav>
         </header>
-
         <section class="for-you-section">
             <div class="section-header">
                 <h2>Popular</h2>
             </div>
-
             <div class="scroll-container">
                 <div class="book-row large">
-                    <div class="book-card">
-                        <div class="book-cover">
-                            <img src="https://m.media-amazon.com/images/I/81QuEGw8VPL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Adventures of Huckleberry Finn">
-                        </div>
-                        <div class="book-info">
-                            <h3>Adventures of Huckleberry Finn</h3>
-                            <p>By Mark Twain</p>
-                        </div>
-                    </div>
-
-                    <div class="book-card purple">
-                        <div class="book-cover">
-                            <img src="Images/atomic-habits.jpg" alt="The World of Abstract Art">
-                        </div>
-                        <div class="book-info">
-                            <h3>The World of Abstract Art</h3>
-                            <p>By Emily Saunders</p>
-                            <div class="rating-container">
-                                <div class="rating">
-                                    <div class="stars">
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                    </div>
-                                </div>
-                                <div class="readers">
-                                    <div class="reader-avatars">
-                                        <img src="https://i.pravatar.cc/24?img=4" alt="Reader">
-                                        <img src="https://i.pravatar.cc/24?img=5" alt="Reader">
-                                        <img src="https://i.pravatar.cc/24?img=6" alt="Reader">
-                                    </div>
-                                    <div class="more-readers">+42</div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
                     <div class="book-card pink">
                         <div class="book-cover">
-                            <img src="Images/richdadapoordada.webp" alt="How To Be the Perfect Dutch">
+                            <img src="Images/ricfashdadapoordada.webp" alt="Loading...">
                         </div>
                         <div class="book-info">
-                            <h3>How To Be the Perfect Dutch</h3>
-                            <p>By Daniel Peterson</p>
-                            <div class="rating-container">
-                                <div class="rating">
-                                    <div class="stars">
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star"></span>
-                                        <span class="star"></span>
-                                    </div>
-                                </div>
-                                <div class="readers">
-                                    <div class="reader-avatars">
-                                        <img src="https://i.pravatar.cc/24?img=7" alt="Reader">
-                                        <img src="https://i.pravatar.cc/24?img=8" alt="Reader">
-                                    </div>
-                                    <div class="more-readers">+55</div>
-                                </div>
-                            </div>
-
+                            <h3></h3>
+                            <p>Loading...</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <div class="content-container">
             <section class="browse-section">
                 <h2>Browse</h2>
                 <div class="book-row small">
                     <div class="book-card small">
                         <div class="book-cover small">
-                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327878801i/12158480.jpg"
-                                alt="Super Mario">
+                            <img src="https://ff.jpg" alt="Loading">
                         </div>
                         <div class="book-info small">
-                            <h3>Super Mario</h3>
-                            <p>Jeff Ryan</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/71pL+3nMzfL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Blue is Darkness Weakened by Light">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Blue is Darkness Weakened by Light</h3>
-                            <p>Sarah Jones</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/91dSMhdIzTL._AC_UF1000,1000_QL80_.jpg"
-                                alt="A Million Miles in a Thousand Years">
-                        </div>
-                        <div class="book-info small">
-                            <h3>A Million Miles in a Thousand Years</h3>
-                            <p>Donald Miller</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="book-row small">
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/81V9X9RlJIL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Boy Erased">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Boy Erased</h3>
-                            <p>Garrard Conley</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1575468480i/49825952.jpg"
-                                alt="The Crow's Vow">
-                        </div>
-                        <div class="book-info small">
-                            <h3>The Crow's Vow</h3>
-                            <p>Susan Briscoe</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card small">
-                        <div class="book-cover small">
-                            <img src="https://m.media-amazon.com/images/I/81ibfYk4qmL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Harry Potter - The Prisoner of Azkaban">
-                        </div>
-                        <div class="book-info small">
-                            <h3>Harry Potter - The Prisoner of Azkaban</h3>
-                            <p>J.K. Rowling</p>
-                            <div class="rating small">
-                                <div class="stars small">
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                    <span class="star filled"></span>
-                                </div>
-                            </div>
+                            <h3></h3>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -289,8 +94,8 @@
 
         </div>
     </div>
-
     <script>
+
         // Fetch books from backend
         async function fetchBooks() {
             try {
@@ -304,83 +109,80 @@
 
         // Create popular book cards
         function createPopularBookCard(book, index) {
-            // Determine the color class based on the index
+
             const colorClass = index % 3 === 1 ? 'purple' : index % 3 === 2 ? 'pink' : '';
 
             return `
-    <div class="book-card ${colorClass}" onclick="window.location.href='/single-book.html?id=${book.id}'">
-        <div class="book-cover">
-            <img src="${book.cover_url || 'placeholder-image.jpg'}" alt="${book.title}">
-        </div>
-        <div class="book-info">
-            <h3>${book.title}</h3>
-            <p>By ${book.author}</p>
-            
-        </div>
-    </div>
-    `;
+                <div class="book-card ${colorClass}" onclick="window.location.href='/single-book.html?id=${book.id}'">
+                    <div class="book-cover">
+                        <img src="${book.cover_url || 'placeholder-image.jpg'}" alt="${book.title}">
+                    </div>
+                    <div class="book-info">
+                        <h3>${book.title}</h3>
+                        <p>By ${book.author}</p>
+
+                    </div>
+                </div>
+                `;
         }
 
-        // Create small book cards for browse section
+        // Create book cards for browse section
         function createSmallBookCard(book) {
             return `
-    <div class="book-card small" onclick="window.location.href='/single-book.html?id=${book.id}'">
-        <div class="book-cover small">
-            <img src="${book.cover_url || 'placeholder-image.jpg'}" alt="${book.title}">
-        </div>
-        <div class="book-info small">
-            <h3>${book.title}</h3>
-            <p>${book.author}</p>
-            <div class="rating small">
-                <div class="stars small">
-                    ${'<span class="star filled"></span>'.repeat(3)}
-                    ${'<span class="star"></span>'.repeat(2)}
+                <div class="book-card small" onclick="window.location.href='/single-book.html?id=${book.id}'">
+                    <div class="book-cover small">
+                        <img src="${book.cover_url || 'placeholder-image.jpg'}" alt="${book.title}">
+                    </div>
+                    <div class="book-info small">
+                        <h3>${book.title}</h3>
+                        <p>${book.author}</p>
+                        <div class="rating small">
+                            <div class="stars small">
+                                ${'<span class="star filled"></span>'.repeat(3)}
+                                ${'<span class="star"></span>'.repeat(2)}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    `;
+                `;
         }
+
         //creates author items
         function createAuthorItem(author) {
             return `
-        <div class="author-item">
-            <div class="author-avatar">
-                <img src="${author.image_url || 'https://i.pravatar.cc/40'}" alt="${author.name}">
-            </div>
-            <div class="author-name">${author.name}</div>
-        </div>
-    `;
+                <div class="author-item">
+                    <div class="author-avatar">
+                        <img src="${author.image_url || 'https://i.pravatar.cc/40'}" alt="${author.name}">
+                    </div>
+                    <div class="author-name">${author.name}</div>
+                </div>
+                `;
         }
+
         // Main function to populate content
         async function initializePage() {
             const books = await fetchBooks();
 
-            // Filter popular books
+            // Filter popular books and populate popular section
             const popularBooks = books.filter(book => book.category === 'popular');
-
-            // Populate Popular section
             const popularSection = document.querySelector('.book-row.large');
             popularSection.innerHTML = popularBooks.map((book, index) => createPopularBookCard(book, index)).join('');
 
             // Populate Browse section
             const browseSection = document.querySelector('.browse-section');
             const existingRows = browseSection.querySelectorAll('.book-row.small');
-            existingRows.forEach(row => row.remove()); // Remove existing example content
+            existingRows.forEach(row => row.remove());
 
             // Split books into chunks of 3 for rows
             const chunkSize = 3;
             for (let i = 0; i < books.length; i += chunkSize) {
                 const bookChunk = books.slice(i, i + chunkSize);
 
-                // Create new row container
                 const row = document.createElement('div');
                 row.className = 'book-row small';
 
-                // Add book cards to the row
                 row.innerHTML = bookChunk.map(createSmallBookCard).join('');
 
-                // Append row to browse section
                 browseSection.appendChild(row);
             }
 
@@ -394,6 +196,7 @@
                 console.error('Error fetching authors:', error);
             }
         }
+
         // Initialize when page loads
         window.addEventListener('DOMContentLoaded', initializePage);
 
@@ -404,7 +207,6 @@
             const results = await response.json();
         });
 
-        //search 
         document.querySelector('.search-box input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const query = e.target.value.trim();
@@ -414,20 +216,19 @@
             }
         });
 
-        // Add this JavaScript to handle the mobile menu
+        // Mobile menu handling
         document.addEventListener('DOMContentLoaded', function () {
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mobileNav = document.querySelector('.mobile-nav');
             const searchInputMobile = document.querySelector('.search-input-mobile');
             const searchButtonMobile = document.querySelector('.search-button-mobile');
 
-            // Toggle mobile menu
             hamburgerBtn.addEventListener('click', function () {
                 this.classList.toggle('active');
                 mobileNav.classList.toggle('active');
             });
 
-            // Handle search functionality when the search button is clicked
+            // Handle search functionality when the search button is clicked in mobile menu
             searchButtonMobile.addEventListener('click', function () {
                 const query = searchInputMobile.value.trim();
                 if (query) {
@@ -447,7 +248,6 @@
 
             // Perform search
             function performSearch(query) {
-                // Redirect to the search results page with the query as a URL parameter
                 window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
             }
         });

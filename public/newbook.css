@@ -93,6 +93,28 @@
     left: 0;
 }
 
+/* File name display */
+.file-name {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+/* Upload area interactions */
+.upload-area {
+    transition: border-color 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #a0aec0;
+}
+
+.upload-area.dragover {
+    border-color: #48bb78;
+    background-color: #f0fff4;
+}
 
 @media (max-width: 768px) {
     .form-grid {

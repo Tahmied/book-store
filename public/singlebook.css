@@ -15,6 +15,29 @@
     /* Add some space for scrollbar */
 }
 
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 20px;
+}
+
+.book-row.small {
+    display: inline-flex;
+    gap: 20px;
+    margin-right: 20px;
+    white-space: normal;
+}
+
+/* Hide scrollbar */
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .book-row.small {
     display: inline-flex;
     gap: 20px;

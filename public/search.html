@@ -9,13 +9,6 @@
     <link rel="stylesheet" href="search.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        @media (max-width: 770px) {
-            .header {
-                display: none !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -68,59 +61,25 @@
 
         <section class="search-results-section">
             <div class="search-meta">
-                <h2>Search Results for "Mark Twain"</h2>
-                <p class="results-count">24 books found</p>
+                <h2>Loading...</h2>
+                <p class="results-count">Loading...</p>
             </div>
 
             <div class="search-content">
-
-
                 <div class="results-grid">
-                    <div class="result-card">
-                        <div class="book-cover">
-                            <img src="https://m.media-amazon.com/images/I/81QuEGw8VPL._AC_UF1000,1000_QL80_.jpg"
-                                alt="Adventures of Huckleberry Finn">
-                        </div>
-                        <div class="book-info">
-                            <h3>Adventures of Huckleberry Finn</h3>
-                            <p class="author">Mark Twain</p>
-                            <div class="result-meta">
-                                <div class="rating">
-                                    <div class="stars">
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star filled"></span>
-                                        <span class="star"></span>
-                                    </div>
-                                    <span class="rating-count">(1,234 ratings)</span>
-                                </div>
-                                <div class="book-details">
-                                    <span class="genre">Classic Literature</span>
-                                    <span class="year">1884</span>
-                                    <span class="pages">366 pages</span>
-                                </div>
-                            </div>
-                            <p class="description">A masterpiece of American literature following Huckleberry Finn's
-                                journey down the Mississippi River, exploring themes of freedom and social conventions.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Repeat result cards as needed -->
+                    <!-- search results will dynamically added here -->
                 </div>
             </div>
 
             <div class="pagination">
                 <button class="page-button active">1</button>
-                <button class="page-button">2</button>
-                <button class="page-button">3</button>
                 <button class="page-button next">Next <i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
     </div>
 
     <script>
+
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const query = urlParams.get('query') || '';
@@ -128,9 +87,6 @@
 
             // Fetch and display results
             await loadSearchResults(query, page);
-
-            // Initialize filters
-            await initializeFilters();
         });
 
         async function loadSearchResults(query, page) {
@@ -148,6 +104,7 @@
 
                 // Update pagination
                 updatePagination(totalPages, page);
+
             } catch (error) {
                 console.error('Error loading results:', error);
             }
@@ -155,97 +112,42 @@
 
         function createResultCard(book) {
             return `
-    <div class="result-card" onclick="window.location.href='/single-book.html?id=${book.id}'">
-        <div class="book-cover">
-            <img src="${book.cover_url || 'placeholder.jpg'}" alt="${book.title}">
-        </div>
-        <div class="book-info">
-            <h3>${book.title}</h3>
-            <p class="author">${book.author}</p>
-            <div class="result-meta">
-                <div class="rating">
-                    <div class="stars">
-                        ${'<span class="star filled"></span>'.repeat(Math.floor(book.rating || 0))}
-                        ${'<span class="star"></span>'.repeat(5 - Math.floor(book.rating || 0))}
-                    </div>
-                </div>
-                <div class="book-details">
-                    <span class="genre">${book.category}</span>
-                    <span class="year">${new Date(book.publication_date).getFullYear()}</span>
-                    <span class="pages">${book.pages} pages</span>
-                </div>
-            </div>
-            <p class="description">${book.description || ''}</p>
-        </div>
-    </div>`;
+                    <div class="result-card" onclick="window.location.href='/single-book.html?id=${book.id}'">
+                        <div class="book-cover">
+                            <img src="${book.cover_url || 'placeholder.jpg'}" alt="${book.title}">
+                        </div>
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <p class="author">${book.author}</p>
+                            <div class="result-meta">
+                                <div class="rating">
+                                    <div class="stars">
+                                        ${'<span class="star filled"></span>'.repeat(Math.floor(book.rating || 0))}
+                                        ${'<span class="star"></span>'.repeat(5 - Math.floor(book.rating || 0))}
+                                    </div>
+                                </div>
+                                <div class="book-details">
+                                    <span class="genre">${book.category}</span>
+                                    <span class="year">${new Date(book.publication_date).getFullYear()}</span>
+                                    <span class="pages">${book.pages} pages</span>
+                                </div>
+                            </div>
+                            <p class="description">${book.description || ''}</p>
+                        </div>
+                    </div>`;
         }
 
         let filterTimeout;
-        const DEBOUNCE_TIME = 500; // 0.5 second delay
+        const DEBOUNCE_TIME = 500;
 
         async function initializeFilters() {
             // Populate categories
             const categorySelect = document.querySelector('.filter-select');
             const categories = await fetch('/categories').then(r => r.json());
             categorySelect.innerHTML = `
-        <option>All Categories</option>
-        ${categories.map(c => `<option>${c}</option>`).join('')}
-    `;
-            // Initialize year inputs from URL params
-            const urlParams = new URLSearchParams(window.location.search);
-            document.querySelector('.year-range input[placeholder="Min"]').value = urlParams.get('minYear') || '';
-            document.querySelector('.year-range input[placeholder="Max"]').value = urlParams.get('maxYear') || '';
-
-            // Update event listeners for filters
-            document.querySelector('.filter-select').addEventListener('change', applyFilters);
-
-            // Use input event with debouncing for year fields
-            document.querySelectorAll('.year-range input').forEach(input => {
-                input.addEventListener('input', handleYearInput);
-            });
-        }
-
-
-        function handleYearInput(e) {
-            // Clear any existing timeout
-            clearTimeout(filterTimeout);
-
-            // Validate input immediately
-            const value = parseInt(e.target.value);
-            if (value < 1900) e.target.value = 1900;
-            if (value > new Date().getFullYear()) e.target.value = new Date().getFullYear();
-
-            // Set new timeout to apply filters after user stops typing
-            filterTimeout = setTimeout(() => {
-                applyFilters();
-            }, DEBOUNCE_TIME);
-        }
-
-        function applyFilters() {
-            const url = new URL(window.location);
-            const category = document.querySelector('.filter-select').value;
-            const minYear = document.querySelector('.year-range input[placeholder="Min"]').value;
-            const maxYear = document.querySelector('.year-range input[placeholder="Max"]').value;
-
-            // Reset page on filter change
-            url.searchParams.delete('page');
-
-            // Update category
-            category === 'All Categories'
-                ? url.searchParams.delete('category')
-                : url.searchParams.set('category', category);
-
-            // Update years
-            minYear ? url.searchParams.set('minYear', minYear) : url.searchParams.delete('minYear');
-            maxYear ? url.searchParams.set('maxYear', maxYear) : url.searchParams.delete('maxYear');
-
-            // Preserve existing query
-            if (!url.searchParams.get('query')) {
-                url.searchParams.set('query', new URLSearchParams(window.location.search).get('query') || '');
-            }
-
-            window.history.replaceState({}, '', url.toString());
-            loadSearchResults(url.searchParams.get('query'), 1);
+                 <option>All Categories</option>
+                 ${categories.map(c => `<option>${c}</option>`).join('')}
+                `;
         }
 
         function updatePagination(totalPages, currentPage) {
@@ -254,17 +156,17 @@
 
             for (let i = 1; i <= totalPages; i++) {
                 pagination.innerHTML += `
-            <button class="page-button ${i == currentPage ? 'active' : ''}" 
-                    onclick="navigateToPage(${i})">${i}</button>
-        `;
+                    <button class="page-button ${i == currentPage ? 'active' : ''}" 
+                            onclick="navigateToPage(${i})">${i}</button>
+                    `;
             }
 
             if (currentPage < totalPages) {
                 pagination.innerHTML += `
-            <button class="page-button next" 
-                    onclick="navigateToPage(${parseInt(currentPage) + 1})">
-                Next <i class="fas fa-chevron-right"></i>
-            </button>`;
+                    <button class="page-button next" 
+                            onclick="navigateToPage(${parseInt(currentPage) + 1})">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>`;
             }
         }
 
@@ -286,7 +188,7 @@
         });
 
 
-        // Add this JavaScript to handle the mobile menu
+        // The js to handle the mobile menu
         document.addEventListener('DOMContentLoaded', function () {
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mobileNav = document.querySelector('.mobile-nav');
@@ -319,7 +221,6 @@
 
             // Perform search
             function performSearch(query) {
-                // Redirect to the search results page with the query as a URL parameter
                 window.location.href = `/search.html?query=${encodeURIComponent(query)}`;
             }
         });

@@ -1,4 +1,3 @@
-/* styles.css - Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -192,6 +191,12 @@ body {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+@media (max-width: 770px) {
+    .header {
+        display: none !important;
+    }
 }
 
 .author {

@@ -9,16 +9,16 @@ const path = require("path");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/uploads", express.static("uploads")); // Serve PDF files
+app.use("/uploads", express.static("uploads"));
 
-app.use(express.static("public")); // Serve frontend files
+app.use(express.static("public"));
 
 
 // Database connection
 const db = mysql.createConnection({
     host: "localhost",
-    user: "bookstore", // Default XAMPP username
-    password: "bookstore", // Default is empty
+    user: "bookstore",
+    password: "bookstore",
     database: "bookstore",
 });
 
@@ -30,7 +30,7 @@ db.connect((err) => {
     }
 });
 
-// File upload setup
+// File upload setup using multer
 const storage = multer.diskStorage({
     destination: "./uploads/",
     filename: (req, file, cb) => {
@@ -41,6 +41,7 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
 });
+
 // Add a new book
 app.post("/add-book", upload.fields([
     { name: 'pdf', maxCount: 1 },
@@ -217,7 +218,9 @@ app.get("/books/category/:category", (req, res) => {
         if (err) return res.status(500).json({ error: err });
         res.json(results);
     });
-});// Get author details (fixed)
+});
+
+// Get author details
 app.get('/api/authors/:id', async (req, res) => {
     try {
         const authorId = req.params.id;
@@ -232,7 +235,7 @@ app.get('/api/authors/:id', async (req, res) => {
     }
 });
 
-// Get books by author (fixed)
+// Get books by author 
 app.get('/api/books', async (req, res) => {
     try {
         const authorId = req.query.author_id;
